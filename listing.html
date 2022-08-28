@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+</head>
+<body>
+
+<h1>Listing example:</h1>
+<form id="listingForm">
+    <input type="number" id="item_id" placeholder="item_id">
+    <input type="text" id="home_server" placeholder="home_server">
+    <input type="number" id="initial_days" placeholder="initial_days">
+    <input type="number" id="end_days" placeholder="end_days">
+    <button type="submit">Submit</button>
+    <p id="test"></p>
+</form>
+
+<br>
+
+<div class="container">
+    <div class="table-wrapper">
+        <table class="alt" id="content">
+            <thead>
+
+                <tr>
+                    <th>listing_price_diff</th>
+                    <th>listing_time_diff</th>
+                    <th>listings</th>
+                    <th>min_price</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+function table(data) {  
+var i = 1;
+var table;
+var row;
+var cell1;
+var cell2;
+var cell3;
+var cell4;
+
+    table = document.getElementById("content");
+
+    row = table.insertRow(i);
+
+    cell1 = row.insertCell(0);
+    cell2 = row.insertCell(1);
+    cell3 = row.insertCell(2);
+    cell4 = row.insertCell(3);
+
+    const createTablePriceDiff = document.createElement("table");
+    createTablePriceDiff.id = "priceDiff";
+    cell1.appendChild(createTablePriceDiff);
+    tablePriceDiff(data['listing_price_diff']);
+
+    const createTableTimeDiff = document.createElement("table");
+    createTableTimeDiff.id = "timeDiff";
+    cell2.appendChild(createTableTimeDiff);
+    tableTimeDiff(data['listing_time_diff']);
+
+    const createTableListings = document.createElement("table");
+    createTableListings.id = "listings";
+    cell3.appendChild(createTableListings);
+    tableListings(data['listings']);
+
+    cell4.innerHTML = data['min_price'];    
+
+}
+
+function tableListings(data) {  
+var i = 1;
+var table;
+var row;
+var cell1;
+var cell2;
+var cell3;
+var cell4;
+var cell5;
+var cell6;
+var cell7;
+var cell8;
+var cell9;
+var cell10;
+var cell11;
+var cell12;
+var cell13;
+var cell14;
+var cell15;
+var cell16;
+
+$("#listings").html("<thead><tr><th>creatorID</th><th>creatorName</th><th>hq</th><th>isCrafted</th><th>lastReviewTime</th><th>listingID</th><th>materia</th><th>onMannequin</th><th>pricePerUnit</th><th>quantity</th><th>retainerCity</th><th>retainerID</th><th>retainerName</th><th>sellerID</th><th>stainID</th><th>total</th></tr></thead><tbody><tr></tr></tbody>");
+
+    for (let key in data) {
+
+        table = document.getElementById("listings");
+
+        row = table.insertRow(i);
+
+        cell1 = row.insertCell(0);
+        cell2 = row.insertCell(1);
+        cell3 = row.insertCell(2);
+        cell4 = row.insertCell(3);
+        cell5 = row.insertCell(4);
+        cell6 = row.insertCell(5);
+        cell7 = row.insertCell(6);
+        cell8 = row.insertCell(7);
+        cell9 = row.insertCell(8);   
+        cell10 = row.insertCell(9);
+        cell11 = row.insertCell(10);
+        cell12 = row.insertCell(11);
+        cell13 = row.insertCell(12);
+        cell14 = row.insertCell(13);
+        cell15 = row.insertCell(14);
+        cell16 = row.insertCell(15);           
+
+        cell1.innerHTML = data[key]['creatorID'];
+        cell2.innerHTML = data[key]['creatorName'];
+        cell3.innerHTML = data[key]['hq'];
+        cell4.innerHTML = data[key]['isCrafted'];
+        cell5.innerHTML = data[key]['lastReviewTime'];
+        cell6.innerHTML = data[key]['listingID'];
+        cell7.innerHTML = data[key]['materia'];
+        cell8.innerHTML = data[key]['onMannequin'];
+        cell9.innerHTML = data[key]['pricePerUnit'];   
+        cell10.innerHTML = data[key]['quantity'];
+        cell11.innerHTML = data[key]['retainerCity'];
+        cell12.innerHTML = data[key]['retainerID'];
+        cell13.innerHTML = data[key]['retainerName'];
+        cell14.innerHTML = data[key]['sellerID'];
+        cell15.innerHTML = data[key]['stainID'];
+        cell16.innerHTML = data[key]['total'];             
+
+        i++;
+
+    }
+
+}
+
+function tablePriceDiff(data) {  
+var i = 1;
+var table;
+var row;
+var cell1;
+var cell2;
+
+$("#priceDiff").html("<thead><tr><th>avg_price_diff</th><th>median_price_diff</th></tr></thead><tbody><tr></tr></tbody>");
+
+        table = document.getElementById("priceDiff");
+
+        row = table.insertRow(i);
+
+        cell1 = row.insertCell(0);
+        cell2 = row.insertCell(1);
+
+        cell1.innerHTML = data['avg_price_diff'];
+        cell2.innerHTML = data['median_price_diff'];
+
+        i++;
+
+}
+
+function tableTimeDiff(data) {  
+var i = 1;
+var table;
+var row;
+var cell1;
+var cell2;
+
+$("#timeDiff").html("<thead><tr><th>avg_time_diff</th><th>median_time_diff</th></tr></thead><tbody><tr></tr></tbody>");
+
+        table = document.getElementById("timeDiff");
+
+        row = table.insertRow(i);
+
+        cell1 = row.insertCell(0);
+        cell2 = row.insertCell(1);
+
+        cell1.innerHTML = data['avg_time_diff'];
+        cell2.innerHTML = data['median_time_diff'];
+
+        i++;
+
+}
+
+
+$(document).ready(function() {
+
+$("#content").css("display","none");
+
+  // process the form
+  $('#listingForm').submit(function(event) {
+
+    $('#test').html("Waiting for results ..."); 
+
+    $("#content").html("<thead><tr><th>listing_price_diff</th><th>listing_time_diff</th><th>listings</th><th>min_price</th></tr></thead><tbody><tr></tr></tbody>");
+
+    $("#content").css("display","block");
+
+      var formData = {
+        'item_id'       : $('#item_id').val(),
+        'home_server'   : $('#home_server').val(),
+        'initial_days'  : $('#initial_days').val(),
+        'end_days'      : $('#end_days').val(),
+      };
+
+      // process the form
+      $.ajax({
+          method      : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+          url         : 'listing.php', // the url where we want to POST
+          data        : formData, // our data object
+          dataType    : 'json', // what type of data do we expect back from the server
+          encode      : true,
+      })
+          // using the done promise callback
+          .done(function(data) {
+
+            $('#test').html(""); 
+        
+            console.log(data);
+
+            table(data);
+
+          })
+
+      // stop the form from submitting the normal way and refreshing the page
+      event.preventDefault();
+  });
+
+});
+
+</script>
+
+</body>
+</html>
+

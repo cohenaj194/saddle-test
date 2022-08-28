@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+</head>
+<body>
+
+<h1>History example:</h1>
+<form id="historyForm">
+    <input type="number" id="item_id" placeholder="item_id">
+    <input type="text" id="home_server" placeholder="home_server">
+    <input type="number" id="initial_days" placeholder="initial_days">
+    <input type="number" id="end_days" placeholder="end_days">
+    <input type="text" id="item_type" placeholder="item_type">
+    <button type="submit">Submit</button>
+    <p id="test"></p>
+</form>
+
+<br>
+
+<div class="container">
+    <div class="table-wrapper">
+        <table class="alt" id="content">
+            <thead>
+
+                <tr>
+                    <th>avg_ppu</th>
+                    <th>avg_quantity_per_day</th>
+                    <th>avg_sales_per_day</th>
+                    <th>dirty_sales</th>
+                    <th>median_ppu</th>
+                    <th>percent_quantity</th>
+                    <th>price_history</th> 
+                    <th>stack_chance</th> 
+                    <th>stack_price</th>    
+                    <th>total_quantity</th> 
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+function table(data) {  
+var i = 1;
+var table;
+var row;
+var cell1;
+var cell2;
+var cell3;
+var cell4;
+var cell5;
+var cell6;
+var cell7;
+var cell8;
+var cell9;
+var cell10;
+
+    table = document.getElementById("content");
+
+    row = table.insertRow(i);
+
+    cell1 = row.insertCell(0);
+    cell2 = row.insertCell(1);
+    cell3 = row.insertCell(2);
+    cell4 = row.insertCell(3);
+    cell5 = row.insertCell(4);
+    cell6 = row.insertCell(5);
+    cell7 = row.insertCell(6);
+    cell8 = row.insertCell(7);
+    cell9 = row.insertCell(8);     
+    cell10 = row.insertCell(9);  
+
+    cell1.innerHTML = data['avg_ppu'];
+    cell2.innerHTML = data['avg_quantity_per_day'];
+    cell3.innerHTML = data['avg_sales_per_day'];
+
+    const createTableDirtySales = document.createElement("table");
+    createTableDirtySales.id = "dirtySales";
+    cell4.appendChild(createTableDirtySales);
+    tableDirtySales(data['dirty_sales']);
+
+    cell5.innerHTML = data['median_ppu'];
+
+    const createTablePercentQuantity = document.createElement("table");
+    createTablePercentQuantity.id = "percentQuantity";
+    cell6.appendChild(createTablePercentQuantity);
+    tablePercentQuantity(data['percent_quantity']);
+
+    const createTablePriceHistory = document.createElement("table");
+    createTablePriceHistory.id = "priceHistory";
+    cell7.appendChild(createTablePriceHistory);
+    tablePriceHistory(data['price_history']);
+
+    const createTableStackChance = document.createElement("table");
+    createTableStackChance.id = "stackChance";
+    cell8.appendChild(createTableStackChance);
+    tableStackChance(data['stack_chance']);
+
+    const createTableStackPrice = document.createElement("table");
+    createTableStackPrice.id = "stackPrice";
+    cell9.appendChild(createTableStackPrice);
+    tableStackPrice(data['stack_price']);
+
+    cell10.innerHTML = data['total_quantity'];    
+
+}
+
+function tableDirtySales(data) {  
+var i = 1;
+var table;
+var row;
+var cell1;
+var cell2;
+var cell3;
+var cell4;
+var cell5;
+var cell6;
+var cell7;
+var cell8;
+var cell9;
+
+$("#dirtySales").html("<thead><tr><th>Buyer Name</th><th>HQ</th><th>Item ID</th><th>On Mannequin</th><th>Price Per Unit</th><th>Quantity</th><th>Real Name</th><th>Server</th><th>Timestamp</th></tr></thead><tbody><tr></tr></tbody>");
+
+    for (let key in data) {
+
+        table = document.getElementById("dirtySales");
+
+        row = table.insertRow(i);
+
+        cell1 = row.insertCell(0);
+        cell2 = row.insertCell(1);
+        cell3 = row.insertCell(2);
+        cell4 = row.insertCell(3);
+        cell5 = row.insertCell(4);
+        cell6 = row.insertCell(5);
+        cell7 = row.insertCell(6);
+        cell8 = row.insertCell(7);
+        cell9 = row.insertCell(8);     
+
+
+        cell1.innerHTML = data[key]['buyerName'];
+        cell2.innerHTML = data[key]['hq'];
+        cell3.innerHTML = data[key]['itemID'];
+        cell4.innerHTML = data[key]['onMannequin'];
+        cell5.innerHTML = data[key]['pricePerUnit'];
+        cell6.innerHTML = data[key]['quantity'];
+        cell7.innerHTML = data[key]['realName'];
+        cell8.innerHTML = data[key]['server'];
+        cell9.innerHTML = data[key]['timestamp'];        
+
+        i++;
+
+    }
+
+}
+
+function tablePercentQuantity(data) {  
+var i = 1;
+var table;
+var row;
+var cell1;
+var cell2;
+var cell3;
+var cell4;
+var cell5;
+
+$("#percentQuantity").html("<thead><tr><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead><tbody><tr></tr></tbody>");
+
+    for (let key in data) {
+
+        table = document.getElementById("percentQuantity");
+
+        row = table.insertRow(i);
+
+        cell1 = row.insertCell(0);
+        cell2 = row.insertCell(1);
+        cell3 = row.insertCell(2);
+        cell4 = row.insertCell(3);
+        cell5 = row.insertCell(4);  
+
+
+        cell1.innerHTML = data[key]['0'];
+        cell2.innerHTML = data[key]['1'];
+        cell3.innerHTML = data[key]['2'];
+        cell4.innerHTML = data[key]['3'];
+        cell5.innerHTML = data[key]['4'];   
+
+        i++;
+
+    }
+
+}
+
+function tablePriceHistory(data) {  
+var i = 1;
+var table;
+var row;
+var cell1;
+var cell2;
+
+$("#priceHistory").html("<thead><tr><th>0</th><th>1</th></tr></thead><tbody><tr></tr></tbody>");
+
+    for (let key in data) {
+
+        table = document.getElementById("priceHistory");
+
+        row = table.insertRow(i);
+
+        cell1 = row.insertCell(0);
+        cell2 = row.insertCell(1);
+
+
+        cell1.innerHTML = data[key]['0'];
+        cell2.innerHTML = data[key]['1'];
+
+        i++;
+
+    }
+
+}
+
+function tableStackChance(data) {  
+var i = 1;
+var table;
+var row;
+var cell1;
+var cell2;
+var cell3;
+var cell4;
+var cell5;
+
+$("#stackChance").html("<thead><tr><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead><tbody><tr></tr></tbody>");
+
+    for (let key in data) {
+
+        table = document.getElementById("stackChance");
+
+        row = table.insertRow(i);
+
+        cell1 = row.insertCell(0);
+        cell2 = row.insertCell(1);
+        cell3 = row.insertCell(2);
+        cell4 = row.insertCell(3);
+        cell5 = row.insertCell(4);  
+
+
+        cell1.innerHTML = data[key]['0'];
+        cell2.innerHTML = data[key]['1'];
+        cell3.innerHTML = data[key]['2'];
+        cell4.innerHTML = data[key]['3'];
+        cell5.innerHTML = data[key]['4'];   
+
+        i++;
+
+    }
+
+}
+
+function tableStackPrice(data) {  
+var i = 1;
+var table;
+var row;
+var cell1;
+var cell2;
+var cell3;
+var cell4;
+var cell5;
+
+$("#stackPrice").html("<thead><tr><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead><tbody><tr></tr></tbody>");
+
+    for (let key in data) {
+
+        table = document.getElementById("stackPrice");
+
+        row = table.insertRow(i);
+
+        cell1 = row.insertCell(0);
+        cell2 = row.insertCell(1);
+        cell3 = row.insertCell(2);
+        cell4 = row.insertCell(3);
+        cell5 = row.insertCell(4);  
+
+
+        cell1.innerHTML = data[key]['0'];
+        cell2.innerHTML = data[key]['1'];
+        cell3.innerHTML = data[key]['2'];
+        cell4.innerHTML = data[key]['3'];
+        cell5.innerHTML = data[key]['4'];   
+
+        i++;
+
+    }
+
+}
+
+$(document).ready(function() {
+
+$("#content").css("display","none");
+
+  // process the form
+  $('#historyForm').submit(function(event) {
+
+    $('#test').html("Waiting for results ..."); 
+
+    $("#content").html("<thead><tr><th>avg_ppu</th><th>avg_quantity_per_day</th><th>avg_sales_per_day</th><th>dirty_sales</th><th>median_ppu</th><th>percent_quantity</th><th>price_history</th><th>stack_chance</th><th>stack_price</th><th>total_quantity</th></tr></thead><tbody><tr></tr></tbody>");
+
+    $("#content").css("display","block");
+
+      var formData = {
+        'item_id'       : $('#item_id').val(),
+        'home_server'   : $('#home_server').val(),
+        'initial_days'  : $('#initial_days').val(),
+        'end_days'      : $('#end_days').val(),
+        'item_type'     : $('#item_type').val()
+      };
+
+      // process the form
+      $.ajax({
+          method      : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+          url         : 'history.php', // the url where we want to POST
+          data        : formData, // our data object
+          dataType    : 'json', // what type of data do we expect back from the server
+          encode      : true,
+      })
+          // using the done promise callback
+          .done(function(data) {
+
+            $('#test').html(""); 
+        
+            console.log(data);
+
+            const dirtySales = data['dirty_sales']; 
+
+            table(data);
+
+          })
+
+      // stop the form from submitting the normal way and refreshing the page
+      event.preventDefault();
+  });
+
+});
+
+</script>
+
+</body>
+</html>
+

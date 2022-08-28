@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+</head>
+<body>
+
+<h1>Undercut example:</h1>
+<form id="undercutForm">
+    <input type="text" id="seller_id" placeholder="seller_id">
+    <input type="text" id="server" placeholder="server">
+    <select id="db">
+      <option value="true">True</option>
+      <option value="false">False</option>
+    </select>
+    <button type="submit">Submit</button>
+    <p id="test"></p>
+</form>
+
+<br>
+
+<div class="container">
+    <div class="table-wrapper">
+        <table class="alt" id="content">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Link</th>
+                    <th>My Retainer</th>
+                    <th>PPU</th>
+                    <th>Real Name</th>
+                    <th>Time</th> 
+                    <th>Undercut</th>
+                    <th>Undercut PPU</th>
+                    <th>Undercut Retainer</th>       
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+function table(auctionData, undercutItemIds) {  
+var i = 1;
+var table;
+var row;
+var cell1;
+var cell2;
+var cell3;
+var cell4;
+var cell5;
+var cell6;
+var cell7;
+var cell8;
+var cell9;
+
+    for (let key in auctionData) {
+
+        table = document.getElementById("content");
+
+        row = table.insertRow(i);
+        row.style.backgroundColor = "#74e37f";
+
+        for (let key2 in undercutItemIds) {
+            if (key === undercutItemIds[key2]) {
+                row.style.backgroundColor = "#db867d";               
+            } 
+        }
+
+        cell1 = row.insertCell(0);
+        cell2 = row.insertCell(1);
+        cell3 = row.insertCell(2);
+        cell4 = row.insertCell(3);
+        cell5 = row.insertCell(4);
+        cell6 = row.insertCell(5);
+        cell7 = row.insertCell(6);
+        cell8 = row.insertCell(7);
+        cell9 = row.insertCell(8);
+
+        cell1.innerHTML = i;
+        cell2.innerHTML = auctionData[key]['link'];
+        cell3.innerHTML = auctionData[key]['my_retainer'];
+        cell4.innerHTML = auctionData[key]['ppu'];
+        cell5.innerHTML = auctionData[key]['real_name'];
+        cell6.innerHTML = auctionData[key]['time'];
+        cell7.innerHTML = auctionData[key]['undercut'];
+        cell8.innerHTML = auctionData[key]['undercut_ppu'];
+        cell9.innerHTML = auctionData[key]['undercut_retainer'];
+
+        i++;
+
+    }
+
+}
+
+$(document).ready(function() {
+
+$("#content").css("display","none");
+
+  // process the form
+  $('#undercutForm').submit(function(event) {
+
+    $('#test').html("Waiting for results ..."); 
+
+    $("#content").html("<thead><tr><th>No.</th><th>Link</th><th>My Retainer</th><th>PPU</th><th>Real Name</th><th>Time</th><th>Undercut</th><th>Undercut PPU</th><th>Undercut Retainer</th></tr></thead><tbody><tr></tr></tbody>");
+
+    $("#content").css("display","block");
+
+      var formData = {
+        'seller_id'      :  $('#seller_id').val(),
+        'server'         :  $('#server').val(),
+        'db'             :  $('#db').val()
+      };
+
+      // process the form
+      $.ajax({
+          method      : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+          url         : 'undercut.php', // the url where we want to POST
+          data        : formData, // our data object
+          dataType    : 'json', // what type of data do we expect back from the server
+          encode      : true,
+      })
+          // using the done promise callback
+          .done(function(data) {
+
+            $('#test').html(""); 
+        
+            console.log(data);
+
+            const auctionData = data['auction_data']; 
+            const undercutItemIds = data['undercut_item_ids'];
+
+            table(auctionData, undercutItemIds);
+
+          })
+
+      // stop the form from submitting the normal way and refreshing the page
+      event.preventDefault();
+  });
+
+});
+
+</script>
+
+</body>
+</html>
+
